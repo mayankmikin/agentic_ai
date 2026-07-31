@@ -1,0 +1,70 @@
+{
+  "run_id": "a874b8d6",
+  "question": "What is the current price of AAPL?",
+  "total_ms": 7951.5,
+  "model_calls": 2,
+  "tool_calls": 1,
+  "prompt_tokens": 578,
+  "completion_tokens": 184,
+  "final_answer": "The current price of AAPL is $185.5. It has seen a daily change of +1.2% and has a volume of 72,000,000.",
+  "spans": [
+    {
+      "kind": "run",
+      "name": "agent_run",
+      "start_ms": 0.0,
+      "duration_ms": 7951.510667800903,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 0,
+      "error": ""
+    },
+    {
+      "kind": "model_call",
+      "name": "model_call#1",
+      "start_ms": 0.007867813110351562,
+      "duration_ms": 6239.552974700928,
+      "prompt_tokens": 192,
+      "completion_tokens": 140,
+      "finish_reason": "tool_calls",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 1,
+      "error": ""
+    },
+    {
+      "kind": "tool_call",
+      "name": "tool:get_market_data#1",
+      "start_ms": 6239.6368980407715,
+      "duration_ms": 2.783060073852539,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "get_market_data",
+      "tool_args": {
+        "ticker": "AAPL"
+      },
+      "tool_result": "{\"ticker\": \"AAPL\", \"price\": 185.5, \"daily_change\": \"+1.2%\", \"volume\": 72000000}",
+      "iteration": 1,
+      "error": ""
+    },
+    {
+      "kind": "model_call",
+      "name": "model_call#2",
+      "start_ms": 6242.46883392334,
+      "duration_ms": 1708.9149951934814,
+      "prompt_tokens": 386,
+      "completion_tokens": 44,
+      "finish_reason": "stop",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 2,
+      "error": ""
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "user_name": {
+    "value": "Mayank",
+    "updated_at": "2026-06-22T15:48:22.171931"
+  },
+  "user_age": {
+    "value": "38",
+    "updated_at": "2026-06-22T15:49:40.961611"
+  },
+  "account_balance": {
+    "value": "$1000",
+    "updated_at": "2026-06-22T15:50:06.387646"
+  }
+}

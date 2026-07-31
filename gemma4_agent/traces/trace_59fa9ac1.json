@@ -1,0 +1,116 @@
+{
+  "run_id": "59fa9ac1",
+  "question": "mayank wants to buy 10 shares of NVDA. Get his balance and the market price of NVDA, then calculate the cost.",
+  "total_ms": 22751.3,
+  "model_calls": 3,
+  "tool_calls": 3,
+  "prompt_tokens": 1824,
+  "completion_tokens": 780,
+  "final_answer": "The market price for NVDA is **$875.40**.\n\nThe total cost to buy 10 shares of NVDA is **$8,754.00**.\n\n*Note: I was unable to retrieve a balance for the user 'Mayank'.*",
+  "spans": [
+    {
+      "kind": "run",
+      "name": "agent_run",
+      "start_ms": 0.0,
+      "duration_ms": 22751.25789642334,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 0,
+      "error": ""
+    },
+    {
+      "kind": "model_call",
+      "name": "model_call#1",
+      "start_ms": 0.0059604644775390625,
+      "duration_ms": 11219.37894821167,
+      "prompt_tokens": 212,
+      "completion_tokens": 392,
+      "finish_reason": "tool_calls",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 1,
+      "error": ""
+    },
+    {
+      "kind": "tool_call",
+      "name": "tool:get_user_balance#1",
+      "start_ms": 11219.433069229126,
+      "duration_ms": 1.7940998077392578,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "get_user_balance",
+      "tool_args": {
+        "username": "Mayank"
+      },
+      "tool_result": "{\"error\": \"User 'Mayank' not found.\"}",
+      "iteration": 1,
+      "error": ""
+    },
+    {
+      "kind": "tool_call",
+      "name": "tool:get_market_data#1",
+      "start_ms": 11221.254825592041,
+      "duration_ms": 2.4220943450927734,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "get_market_data",
+      "tool_args": {
+        "ticker": "NVDA"
+      },
+      "tool_result": "{\"ticker\": \"NVDA\", \"price\": 875.4, \"daily_change\": \"+3.5%\", \"volume\": 55000000}",
+      "iteration": 1,
+      "error": ""
+    },
+    {
+      "kind": "model_call",
+      "name": "model_call#2",
+      "start_ms": 11223.704814910889,
+      "duration_ms": 6039.994239807129,
+      "prompt_tokens": 687,
+      "completion_tokens": 203,
+      "finish_reason": "tool_calls",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 2,
+      "error": ""
+    },
+    {
+      "kind": "tool_call",
+      "name": "tool:calculate#2",
+      "start_ms": 17263.7357711792,
+      "duration_ms": 0.057220458984375,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "finish_reason": "",
+      "tool_name": "calculate",
+      "tool_args": {
+        "expression": "10 * 875.4"
+      },
+      "tool_result": "{\"expression\": \"10 * 875.4\", \"result\": 8754.0}",
+      "iteration": 2,
+      "error": ""
+    },
+    {
+      "kind": "model_call",
+      "name": "model_call#3",
+      "start_ms": 17263.808250427246,
+      "duration_ms": 5487.395763397217,
+      "prompt_tokens": 925,
+      "completion_tokens": 185,
+      "finish_reason": "stop",
+      "tool_name": "",
+      "tool_args": {},
+      "tool_result": "",
+      "iteration": 3,
+      "error": ""
+    }
+  ]
+}

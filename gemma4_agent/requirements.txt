@@ -1,0 +1,5 @@
+# Core SDK for communicating with Docker Model Runner (DMR)
+openai>=1.0.0
+
+# Handles underlying HTTP requests and async support
+httpx>=0.25.0
