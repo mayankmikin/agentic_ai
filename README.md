@@ -5,7 +5,7 @@
 > `python3 -m venv agents_env`
 
 #####
-Here, aqua is the name of the directory where the virtual environment will be created. You can choose any name you like.
+Here, agents_env is the name of the directory where the virtual environment will be created. You can choose any name you like.
 
 #### CMDS 
 > `source agents_env/bin/activate`
@@ -14,7 +14,7 @@ Here, aqua is the name of the directory where the virtual environment will be cr
 #### PIP - libraries install and setup 
 ###### SAVE in requirement .txt
 > `pip freeze > requirements.txt`
-##### install packages befofe deployment/local environment command 
+##### install packages before deployment/local environment command 
 > `pip install -r requirements.txt`
 > `pip freeze > requirements.txt`
 

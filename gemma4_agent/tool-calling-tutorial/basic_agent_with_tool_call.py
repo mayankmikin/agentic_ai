@@ -1,6 +1,7 @@
 import json
-import httpx
+
 from openai import OpenAI
+
 # Point to Docker Model Runner's OpenAI-compatible endpoint
 client = OpenAI(
     base_url="http://localhost:11434/v1",
