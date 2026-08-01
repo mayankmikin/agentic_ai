@@ -1,27 +1,29 @@
 import json
-import httpx
+import urllib
+
 from openai import OpenAI
+import sys
+from tools import AVAILABLE_TOOLS,get_current_weather,list_directory_contents,execute_python_code
+
 # Point to Docker Model Runner's OpenAI-compatible endpoint
 client = OpenAI(
     base_url="http://localhost:11434/v1",
     api_key="ollama" # required but not used
 )
 
-# 1. Define the Tools available to the agent
-def get_stock_price(ticker: str) -> str:
-    """Mock database/API look up for real-time portfolio data."""
-    mock_db = {"AAPL": "185.50 USD", "GOOG": "175.20 USD", "MSFT": "420.10 USD"}
-    return f"The current price of {ticker} is {mock_db.get(ticker.upper(), 'Unknown')}."
-
-AVAILABLE_TOOLS = {
-    "get_stock_price": get_stock_price
+# A dictionary to easily access the functions by name
+TOOL_FUNCTIONS = {
+    "get_current_weather": get_current_weather,
+    "execute_python_code": execute_python_code,
+    "list_directory_contents": list_directory_contents,
 }
+
 
 # 2. Instruct Gemma 4 on how to think and act
 SYSTEM_PROMPT = """
 You are a smart AI Agent operating in a loop: Reason, Act, Observe.
-You have access to the following tools:
-- get_stock_price(ticker: str): Returns the latest price of a stock asset.
+You have access to the following tools from python dictionary: 
+TOOL_FUNCTIONS
 
 To use a tool, you MUST use the exact JSON format below:
 Action: {"tool": "tool_name", "args": {"param": "value"}}
@@ -32,12 +34,41 @@ Final Answer: [Your definitive response here]
 Always output your internal thought process first.
 """
 
+def call_ollama(payload):
+    """Helper function to call the local Ollama API."""
+    url = "http://localhost:11434/api/chat"
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode('utf-8'),
+        headers={'Content-Type': 'application/json'}
+    )
+    with urllib.request.urlopen(req) as response:
+        return json.loads(response.read().decode('utf-8'))
 
 def run_agent(user_request: str):
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_request}
     ]
+    payload = {
+        "model": "gemma4:e4b",  # The model you specified
+        "messages": messages,
+        "tools": AVAILABLE_TOOLS,
+        "stream": False
+    }
+
+    # get the first response from ollama
+
+    try:
+        response_data = call_ollama(payload)
+    except Exception as e:
+        print(f"    └─ [ERROR] Error calling Ollama API: {e}")
+        print("    └─ Make sure Ollama is running and the gemma4:e2b model is pulled.")
+        return
+
+    message = response_data.get("message", {})
+    # Add the model's tool calls to the chat history
+    messages.append(message)
 
     # Limit execution loop to prevent infinite runaways
     for i in range(5):
@@ -87,5 +118,26 @@ def run_agent(user_request: str):
                 error_msg = f"Error parsing/executing action: {str(e)}. Correct your formatting."
                 messages.append({"role": "user", "content": error_msg})
 
-# Test Drive
-run_agent("Can you look up the current value of my Apple (AAPL) holdings?")
+
+
+def main():
+    print("\n[SYSTEM]")
+
+    for tool in TOOL_FUNCTIONS.keys():
+        print(f"  ○ {('Tool: ' + tool).ljust(45, '.')} [LOADED]")
+    print()
+
+    print("[EXECUTION]")
+    print("  ● Querying model...\n")
+
+    # Allow user prompt to be sent via command line as an arg
+    if len(sys.argv) > 1:
+        user_query = "".join(sys.argv[1:])
+    else:
+        print("Please try again and provide a prompt to use.\n")
+        sys.exit(1)
+
+    run_agent(user_query)
+
+if __name__ == "__main__":
+    main()
