@@ -19,3 +19,6 @@ typing_extensions==4.16.0
 openai>=1.0.0
 # Handles underlying HTTP requests and async support
 httpx>=0.25.0
+streamlit>=1.35.0
+langchain-openai>=0.1.0
+langchain-core>=0.2.0
