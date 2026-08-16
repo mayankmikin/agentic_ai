@@ -11,7 +11,7 @@ client = OpenAI(
     api_key="ollama" # required but not used
 )
 
-# The tools defined in the Ollama JSON schema format
+# The tools_local defined in the Ollama JSON schema format
 available_tools = [
     {
         "type": "function",
@@ -43,7 +43,7 @@ AVAILABLE_TOOLS = {
 # 2. Instruct Gemma 4 on how to think and act
 SYSTEM_PROMPT = """
 You are a smart AI Agent operating in a loop: Reason, Act, Observe.
-You have access to the following tools:
+You have access to the following tools_local:
 - get_current_weather(city: str, unit: str = "celsius"): Returns the latest weather update.
 
 To use a tool, you MUST use the exact JSON format below:

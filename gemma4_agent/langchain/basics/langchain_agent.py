@@ -8,7 +8,7 @@ from client_type import  ollama_client
 # Replace 'localhost' with 'host.docker.internal' if running inside another container
 llm = ollama_client
 
-# 2. Define custom tools with clear docstrings so the agent knows when to use them
+# 2. Define custom tools_local with clear docstrings so the agent knows when to use them
 @tool
 def add_numbers(a: int, b: int) -> int:
     """Adds two integers together."""
@@ -17,7 +17,7 @@ def add_numbers(a: int, b: int) -> int:
 # 3. Create the agent harness using the llm instance
 agent = create_agent(
     model=llm,                         # Pass the configured ChatOpenAI object here
-    tools=[add_numbers],               # Provide a list of available tools
+    tools=[add_numbers],               # Provide a list of available tools_local
     system_prompt="You are a helpful mathematical assistant.",
 )
 

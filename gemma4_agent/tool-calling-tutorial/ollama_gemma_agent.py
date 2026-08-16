@@ -22,7 +22,7 @@ TOOL_FUNCTIONS = {
 # 2. Instruct Gemma 4 on how to think and act
 SYSTEM_PROMPT = """
 You are a smart AI Agent operating in a loop: Reason, Act, Observe.
-You have access to the following tools from python dictionary: 
+You have access to the following tools_local from python dictionary: 
 TOOL_FUNCTIONS
 
 To use a tool, you MUST use the exact JSON format below:
@@ -53,7 +53,7 @@ def run_agent(user_request: str):
     payload = {
         "model": "gemma4:e4b",  # The model you specified
         "messages": messages,
-        "tools": AVAILABLE_TOOLS,
+        "tools_local": AVAILABLE_TOOLS,
         "stream": False
     }
 

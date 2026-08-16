@@ -1,4 +1,4 @@
-# The tools defined in the Ollama JSON schema format
+# The tools_local defined in the Ollama JSON schema format
 AVAILABLE_TOOLS =[
     {
         "type": "function",
