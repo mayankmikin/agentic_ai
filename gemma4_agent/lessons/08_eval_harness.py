@@ -23,8 +23,8 @@ WHAT WE BUILD:
   └─────────────────────────────────────────────────────────────────┘
 
 SCORERS EXPLAINED:
-  • ToolCallScorer   — Did the agent call the tools you expected?
-                       Partial credit: 1/2 tools called → 0.5 score
+  • ToolCallScorer   — Did the agent call the tools_local you expected?
+                       Partial credit: 1/2 tools_local called → 0.5 score
   • AnswerScorer     — Does the final answer contain the expected facts?
                        Case-insensitive substring match, partial credit
 
@@ -155,13 +155,13 @@ TOOL_SCHEMAS = [
 ]
 
 SYSTEM_PROMPT = (
-    "You are a financial assistant. Answer questions using the available tools. "
+    "You are a financial assistant. Answer questions using the available tools_local. "
     "Be concise. Always include the numbers you looked up."
 )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 1. AGENT (same pattern as Lesson 6/7, returns answer + tools called)
+# 1. AGENT (same pattern as Lesson 6/7, returns answer + tools_local called)
 # ══════════════════════════════════════════════════════════════════════════════
 
 @dataclass
@@ -239,7 +239,7 @@ class EvalCase:
 
     id:                    short identifier for the report table
     question:              what to ask the agent
-    expected_tools:        tools that MUST be called (subset match — order doesn't matter)
+    expected_tools:        tools_local that MUST be called (subset match — order doesn't matter)
     expected_answer_contains: strings that must appear in the answer (case-insensitive)
     """
     id:                       str
@@ -254,10 +254,10 @@ class EvalCase:
 
 class ToolCallScorer:
     """
-    Did the agent call the expected tools?
+    Did the agent call the expected tools_local?
 
     Partial credit:
-      All expected tools called  → 1.0
+      All expected tools_local called  → 1.0
       k out of n expected called → k/n
       None called                → 0.0
     """
@@ -266,7 +266,7 @@ class ToolCallScorer:
 
     def score(self, case: EvalCase, result: AgentResult) -> tuple[float, str]:
         if not case.expected_tools:
-            return 1.0, "no tools expected (pass)"
+            return 1.0, "no tools_local expected (pass)"
 
         called_set   = set(result.tools_called)
         expected_set = set(case.expected_tools)

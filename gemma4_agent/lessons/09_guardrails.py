@@ -422,7 +422,7 @@ TOOL_SCHEMAS = [
 # ══════════════════════════════════════════════════════════════════════════════
 
 SYSTEM_PROMPT = (
-    "You are a financial assistant. Answer questions using the available tools. "
+    "You are a financial assistant. Answer questions using the available tools_local. "
     "Be concise. Always include the numbers you looked up."
 )
 

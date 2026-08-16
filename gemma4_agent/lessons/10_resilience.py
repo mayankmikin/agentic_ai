@@ -1,7 +1,7 @@
 """
 LESSON 10 — Resilience Engineering
 =====================================
-"Build for failure — tools break, APIs timeout, models return garbage."
+"Build for failure — tools_local break, APIs timeout, models return garbage."
 
 Production agents don't live in a clean demo environment. Real-world issues:
   • Network hiccups cause API timeouts
@@ -30,7 +30,7 @@ This lesson shows four patterns that compose into a "resilient tool runner".
     Tool exceeds the limit? Raise TimeoutError, let retry/fallback handle it.
 
 All four compose into ResilientToolRunner which wraps your tool registry.
-The agent calls tools exactly as before — resilience is transparent.
+The agent calls tools_local exactly as before — resilience is transparent.
 
   ┌──────────────────────────────────────────────────────────────────────────┐
   │  AGENT requests: get_market_data("AAPL")                                 │
@@ -158,7 +158,7 @@ class RetryPolicy:
 
 class FallbackRegistry:
     """
-    Associates primary tools with fallback alternatives.
+    Associates primary tools_local with fallback alternatives.
 
     When the primary fails (after retries), the registry routes the call
     to the next fallback. Fallbacks are tried in order.
@@ -635,7 +635,7 @@ _direct_tools: dict[str, Callable] = {
 # ══════════════════════════════════════════════════════════════════════════════
 
 SYSTEM_PROMPT = (
-    "You are a financial assistant. Answer questions using the available tools. "
+    "You are a financial assistant. Answer questions using the available tools_local. "
     "Be concise. Always include the numbers you looked up."
 )
 
