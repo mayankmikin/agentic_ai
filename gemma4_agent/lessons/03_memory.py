@@ -20,7 +20,7 @@ Agents have two kinds of memory. Understanding both is critical.
 
 This lesson builds:
   - A MemoryStore class that saves/loads facts to a JSON file.
-  - Two tools: remember_fact (save) and recall_facts (load).
+  - Two tools_local: remember_fact (save) and recall_facts (load).
   - A conversational agent that accumulates knowledge across turns.
 
 Run:  python3 lessons/03_memory.py
@@ -276,7 +276,7 @@ def main():
     conversation_history = [
         {"role": "system", "content": (
             "You are a personal financial assistant. "
-            "You have tools to remember and recall facts about the user across sessions. "
+            "You have tools_local to remember and recall facts about the user across sessions. "
             "At the start, recall what you know about the user. "
             "When users tell you important things (their name, portfolio, preferences), remember them. "
             "Use remembered context to give personalised answers."

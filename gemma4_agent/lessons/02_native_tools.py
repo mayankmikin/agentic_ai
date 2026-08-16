@@ -1,21 +1,21 @@
 """
-LESSON 2 — Native Tool Calling (OpenAI `tools` API)
+LESSON 2 — Native Tool Calling (OpenAI `tools_local` API)
 ====================================================
 Instead of parsing "Action: {...}" from plain text, we use the OpenAI
-`tools` parameter to give the model a JSON schema for each tool.
+`tools_local` parameter to give the model a JSON schema for each tool.
 
 The model returns a structured `tool_calls` object — no text parsing needed.
 
 HOW IT WORKS:
-  1. You define tools as JSON schemas (what the function does, its parameters).
-  2. You pass them to the API: client.chat.completions.create(tools=[...])
+  1. You define tools_local as JSON schemas (what the function does, its parameters).
+  2. You pass them to the API: client.chat.completions.create(tools_local=[...])
   3. The model returns finish_reason="tool_calls" instead of "stop".
   4. You read response.choices[0].message.tool_calls to get the call details.
   5. Execute your Python function, then inject the result as a "tool" role message.
 
 COMPARISON WITH LESSON 1:
   Lesson 1 (ReAct/text):   fragile text parsing, works with any model
-  Lesson 2 (native tools):  structured JSON, reliable, industry standard
+  Lesson 2 (native tools_local):  structured JSON, reliable, industry standard
 
 IMPORTANT — Message format for tool calls:
   assistant message must include tool_calls (not just content)
@@ -182,8 +182,8 @@ def run_agent(user_request: str, max_iterations: int = 6):
     Native tool-calling agent loop.
 
     Key difference from Lesson 1:
-      - We pass `tools=TOOL_SCHEMAS` to every API call.
-      - When finish_reason == "tool_calls", we execute tools and add them as
+      - We pass `tools_local=TOOL_SCHEMAS` to every API call.
+      - When finish_reason == "tool_calls", we execute tools_local and add them as
         role="tool" messages — not as fake "user" messages.
       - The message history follows the OpenAI multi-turn tool protocol exactly.
     """
@@ -194,7 +194,7 @@ def run_agent(user_request: str, max_iterations: int = 6):
     messages = [
         {"role": "system", "content": (
             "You are a helpful financial analyst. "
-            "Use the available tools to answer questions accurately. "
+            "Use the available tools_local to answer questions accurately. "
             "After all needed data is gathered, give a clear, concise final answer."
         )},
         {"role": "user", "content": user_request},
@@ -207,7 +207,7 @@ def run_agent(user_request: str, max_iterations: int = 6):
             model=MODEL,
             messages=messages,
             tools=TOOL_SCHEMAS,
-            tool_choice="auto",   # "auto" = model decides when to call tools
+            tool_choice="auto",   # "auto" = model decides when to call tools_local
             temperature=1.0,
             extra_body={"chat-template-kwargs": {"enable_thinking": True}},
         )
@@ -218,7 +218,7 @@ def run_agent(user_request: str, max_iterations: int = 6):
 
         print(f"[finish_reason: {finish_reason}]")
 
-        # ── CASE A: Model wants to call one or more tools ───────────────────
+        # ── CASE A: Model wants to call one or more tools_local ───────────────────
         if finish_reason == "tool_calls":
             # The assistant message must be appended AS-IS (with tool_calls field)
             # so the model knows it already requested these calls.
@@ -259,7 +259,7 @@ if __name__ == "__main__":
     # Test 1: single tool
     run_agent("What is the current price of NVDA stock?")
 
-    # Test 2: tool + calculation (two different tools chained)
+    # Test 2: tool + calculation (two different tools_local chained)
     run_agent(
         "If I own 50 shares of AAPL and 30 shares of MSFT, "
         "what is the total current value of my holdings?"

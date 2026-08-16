@@ -1,6 +1,6 @@
 import json
 from openai import OpenAI
-# Import your custom tools from the separate files
+# Import your custom tools_local from the separate files
 from tools import lookup_ticker_from_csv, query_portfolio_db
 from client_model import client
 # Update the registry
@@ -12,7 +12,7 @@ AVAILABLE_TOOLS = {
 # Update the System Prompt to guide Gemma 4's reasoning
 SYSTEM_PROMPT = """
 You are an AI Agent operating in a loop: Reason, Act, Observe.
-You have access to the following data tools:
+You have access to the following data tools_local:
 
 1. query_portfolio_db(query_type: str, parameter: str):
    - Use this to check cash balances or asset prices in the database.

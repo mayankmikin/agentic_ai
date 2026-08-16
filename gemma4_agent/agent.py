@@ -21,7 +21,7 @@ AVAILABLE_TOOLS = {
 # 2. Instruct Gemma 4 on how to think and act
 SYSTEM_PROMPT = """
 You are a smart AI Agent operating in a loop: Reason, Act, Observe.
-You have access to the following tools:
+You have access to the following tools_local:
 - get_stock_price(ticker: str): Returns the latest price of a stock asset.
 
 To use a tool, you MUST use the exact JSON format below:

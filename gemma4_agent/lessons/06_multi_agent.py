@@ -21,7 +21,7 @@ ARCHITECTURE:
         └──────────┘     └──────────────┘  └──────────────┘
 
 WHY MULTI-AGENT?
-  • Specialisation — each agent has a focused system prompt and minimal tools.
+  • Specialisation — each agent has a focused system prompt and minimal tools_local.
     This reduces confusion and hallucination.
   • Scalability — add new specialists without touching existing ones.
   • Parallelism — for independent subtasks, run agents concurrently (see note at bottom).
@@ -29,7 +29,7 @@ WHY MULTI-AGENT?
 
 IMPLEMENTATION APPROACH (simple, synchronous):
   1. Orchestrator classifies the question → picks one or more agents.
-  2. Each sub-agent runs with its own tools and system prompt.
+  2. Each sub-agent runs with its own tools_local and system prompt.
   3. Orchestrator aggregates the results into a final response.
 
 Run:  python3 lessons/06_multi_agent.py
@@ -143,11 +143,11 @@ def calculate(expression: str) -> str:
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SPECIALISED AGENTS
-# Each agent is defined by: system_prompt + tools it's allowed to use
+# Each agent is defined by: system_prompt + tools_local it's allowed to use
 # ═══════════════════════════════════════════════════════════════════════════════
 
 class SubAgent:
-    """A specialised agent with its own identity, tools, and tool schemas."""
+    """A specialised agent with its own identity, tools_local, and tool schemas."""
 
     def __init__(self, name: str, system_prompt: str, tool_schemas: list, tool_functions: dict):
         self.name = name

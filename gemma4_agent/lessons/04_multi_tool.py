@@ -1,7 +1,7 @@
 """
 LESSON 4 — Multi-Tool Agent: Chaining Tool Calls
 =================================================
-Real tasks often require chaining multiple tools — the output of one tool
+Real tasks often require chaining multiple tools_local — the output of one tool
 feeds into the decision to call the next.
 
 EXAMPLE FLOW:
@@ -14,9 +14,9 @@ EXAMPLE FLOW:
   Iteration 4: calculate("50*185.50 + 30*420.10") → $18,278
   Final Answer: No, current value is $18,278. That's below $50,000.
 
-The agent decides what to call and when — you just define the tools.
+The agent decides what to call and when — you just define the tools_local.
 
-This lesson connects to your REAL tools: csv_tool and sqlite_tool.
+This lesson connects to your REAL tools_local: csv_tool and sqlite_tool.
 We also add a calculator tool so the agent can do math.
 
 Run:  python3 lessons/04_multi_tool.py
@@ -260,7 +260,7 @@ def run_agent(question: str):
     messages = [
         {"role": "system", "content": (
             "You are a financial analyst assistant. "
-            "You have tools to look up stock prices (CSV), query a portfolio database (SQLite), "
+            "You have tools_local to look up stock prices (CSV), query a portfolio database (SQLite), "
             "perform calculations, and compare stocks. "
             "Chain as many tool calls as needed to fully answer the question. "
             "When you have all the data you need, give a clear and complete final answer. "
@@ -269,7 +269,7 @@ def run_agent(question: str):
         {"role": "user", "content": question},
     ]
 
-    tool_call_log = []  # track all tools used for the summary
+    tool_call_log = []  # track all tools_local used for the summary
 
     for iteration in range(1, 10):
         response = client.chat.completions.create(
@@ -315,19 +315,19 @@ if __name__ == "__main__":
     # Single tool
     run_agent("What is the current trading volume of TSLA?")
 
-    # Two tools chained: CSV + calculate
+    # Two tools_local chained: CSV + calculate
     run_agent(
         "If I buy 100 shares of NVDA and 50 shares of AMZN, "
         "how much would that cost me in total?"
     )
 
-    # Two tools chained: DB + CSV comparison
+    # Two tools_local chained: DB + CSV comparison
     run_agent(
         "What is mayank's cash balance, and how does AAPL's price "
         "compare to GOOG's price?"
     )
 
-    # Three tools chained: DB balance + CSV price + calculate
+    # Three tools_local chained: DB balance + CSV price + calculate
     run_agent(
         "mayank has a balance in the database. If he invested all of it "
         "in MSFT stock at the current CSV price, how many full shares could he buy?"

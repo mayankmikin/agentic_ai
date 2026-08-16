@@ -7,13 +7,13 @@ For complex multi-step tasks, this leads to mistakes and unnecessary tool calls.
 Plan-and-Execute (also called "task decomposition") adds a Planning Phase:
 
   PHASE 1: PLAN
-    Give the model the goal + available tools.
+    Give the model the goal + available tools_local.
     Ask it to output a numbered list of steps — NOT to execute anything yet.
     Review the plan (you could add a human approval step here).
 
   PHASE 2: EXECUTE
     Walk through each plan step one at a time.
-    Run the appropriate tools for each step.
+    Run the appropriate tools_local for each step.
     Collect intermediate results.
 
   PHASE 3: SYNTHESISE
@@ -170,7 +170,7 @@ def execute_tool(tool_call) -> str:
     return result
 
 
-# ── HELPER: one-shot model call (no tools, just text) ─────────────────────────
+# ── HELPER: one-shot model call (no tools_local, just text) ─────────────────────────
 
 def ask_model(system: str, user: str) -> str:
     response = client.chat.completions.create(
@@ -188,10 +188,10 @@ def ask_model(system: str, user: str) -> str:
 
 # ── PHASE 1: PLAN ─────────────────────────────────────────────────────────────
 
-PLANNER_SYSTEM = """You are a planning assistant. Given a task and a list of available tools,
+PLANNER_SYSTEM = """You are a planning assistant. Given a task and a list of available tools_local,
 output a numbered step-by-step plan to complete the task.
 
-Available tools:
+Available tools_local:
 - get_market_data(ticker) — price, daily change, volume from CSV
 - query_portfolio(query_type, parameter) — balance or stock price from SQLite
 - calculate(expression) — arithmetic
@@ -231,7 +231,7 @@ def execute_step(step: str, context: list[dict]) -> str:
     """
     Execute a single plan step.
     We give the model the step description + gathered context so far.
-    The model calls tools if needed, then returns its intermediate result.
+    The model calls tools_local if needed, then returns its intermediate result.
     """
     context_text = "\n".join(
         f"Step {i+1} result: {c['result']}"
@@ -241,7 +241,7 @@ def execute_step(step: str, context: list[dict]) -> str:
     messages = [
         {"role": "system", "content": (
             "You are executing one step of a financial analysis plan. "
-            "Use the provided tools to complete this specific step. "
+            "Use the provided tools_local to complete this specific step. "
             "After completing the step, summarise what you found in 1-2 sentences. "
             "Do NOT do more than what this step asks.\n\n"
             f"Context from previous steps:\n{context_text}"

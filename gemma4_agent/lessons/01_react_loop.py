@@ -80,12 +80,12 @@ TOOLS = {
 
 # ── 2. SYSTEM PROMPT ───────────────────────────────────────────────────────────
 # The system prompt is your contract with the model.
-# It defines: what the agent IS, what tools exist, and HOW to format actions.
+# It defines: what the agent IS, what tools_local exist, and HOW to format actions.
 
 SYSTEM_PROMPT = """You are a financial assistant AI agent. You operate in a loop:
 Reason → Act → Observe → Repeat until done.
 
-Available tools:
+Available tools_local:
 - get_stock_price(ticker: str) — returns the latest price for a stock symbol.
 - get_weather(city: str) — returns current weather for a city.
 
