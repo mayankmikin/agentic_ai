@@ -1,0 +1,1 @@
+npx @modelcontextprotocol/inspector python3 weather_server.py
